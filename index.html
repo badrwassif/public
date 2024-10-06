@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index Page</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* Creates 4 equal columns */
+            gap: 130px; /* Adds space between grid items */
+            text-align: center
+        }
+        .container a {
+            display: inline-block; /* Changed to inline-block */
+            margin-right: 20px; /* Margin added between links */
+            font-size: 24px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        .container a:last-child {
+            margin-right: 0; /* Remove margin for the last link */
+        }
+        .container a:hover {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="mcdonalds.html">McDonald's</a>
+        <a href="kfc.html">KFC</a>
+        <a href="Tacos de Lyon.html">Tacos de Lyon</a>
+        <a href="burgerking.html">Burger King</a>
+        <a href="burgerking.html">Pizza Hut</a>
+        <a href="glovo.html">Glovo Market</a>
+        <a href="foodalafrancaise.html">Food à la Française</a>
+        <a href="foodalafrancaise.html">Marjane</a>
+    </div>
+</body>
+</html>
