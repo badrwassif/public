@@ -1,0 +1,36 @@
+.big-restorant-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+#restorants-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* Creates 4 equal columns */
+    gap: 130px;
+    /* Adds space between grid items */
+    text-align: center
+}
+
+#restorants-container a {
+    display: inline-block;
+    /* Changed to inline-block */
+    margin-right: 20px;
+    /* Margin added between links */
+    font-size: 24px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+#restorants-container a:last-child {
+    margin-right: 0;
+    /* Remove margin for the last link */
+}
+
+#restorants-container a:hover {
+    font-weight: bold;
+}

@@ -1,51 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index Page</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-        }
-        .container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); /* Creates 4 equal columns */
-            gap: 130px; /* Adds space between grid items */
-            text-align: center
-        }
-        .container a {
-            display: inline-block; /* Changed to inline-block */
-            margin-right: 20px; /* Margin added between links */
-            font-size: 24px;
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
-        }
-        .container a:last-child {
-            margin-right: 0; /* Remove margin for the last link */
-        }
-        .container a:hover {
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <a href="mcdonalds.html">McDonald's</a>
-        <a href="kfc.html">KFC</a>
-        <a href="Tacos de Lyon.html">Tacos de Lyon</a>
-        <a href="burgerking.html">Burger King</a>
-        <a href="burgerking.html">Pizza Hut</a>
-        <a href="glovo.html">Glovo Market</a>
-        <a href="foodalafrancaise.html">Food à la Française</a>
-        <a href="foodalafrancaise.html">Marjane</a>
-    </div>
-</body>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Authentification par téléphone - Firebase</title>
+
+    <!-- Importation des scripts Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css"
+    />
+
+    <script type="text/javascript">
+      // Votre configuration Firebase
+      const firebaseConfig = {
+        apiKey: "AIzaSyBIwOxG_ef7A2Xip8AsWUZ8IoZV8VBpLvM",
+        authDomain: "lunchproapp.firebaseapp.com",
+        projectId: "lunchproapp",
+        storageBucket: "lunchproapp.appspot.com",
+        messagingSenderId: "152392983898",
+        appId: "1:152392983898:web:d2226b907876e786ffbf63",
+        measurementId: "G-SH04LLPWGP",
+      };
+
+      // Initialisation de Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      // Configuration de FirebaseUI pour l'authentification par téléphone
+      const uiConfig = {
+        signInSuccessUrl: "./restorant.html", // Redirection après connexion réussie
+        signInOptions: [
+          firebase.auth.PhoneAuthProvider.PROVIDER_ID, // Auth par téléphone
+        ],
+        tosUrl: "/terms-of-service", // URL des termes de service
+        privacyPolicyUrl: "/privacy-policy", // URL de la politique de confidentialité
+      };
+
+      // Initialisation du widget FirebaseUI
+      const ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+      // Démarrage de FirebaseUI une fois le DOM chargé
+      window.onload = function () {
+        ui.start("#firebaseui-auth-container", uiConfig);
+      };
+    </script>
+  </head>
+  <body>
+    <h1>Connexion avec numéro de téléphone</h1>
+    <!-- Conteneur où FirebaseUI affichera l'interface -->
+    <div id="firebaseui-auth-container"></div>
+  </body>
 </html>

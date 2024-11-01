@@ -7,7 +7,7 @@
     <style>
       body {
         font-family: Arial, sans-serif;
-        background-color: #4d77ae;
+        background-color: #e2ce18;
         display: flex;
         flex-direction: column;
         padding: 20px;
@@ -188,40 +188,7 @@
     </style>
   </head>
   <body>
-    <!-- <div class="input-row">
-      <div class="input-container">
-        <select id="delivered">
-          <option value="Delivered A">Delivered</option>
-          <option value="Delivered B">Delivered 1</option>
-          <option value="Delivered C">Delivered 2</option>
-        </select>
-      </div>
-
-      <div class="input-container">
-        <select id="company">
-          <option value="Company A">Company</option>
-          <option value="Company B">Company 1</option>
-          <option value="Company C">Company 2</option>
-        </select>
-      </div>
-
-      <div class="input-container">
-        <input type="date" id="date" />
-      </div>
-
-      <div class="input-container">
-        <input type="number" id="orderNumber" placeholder="Order Number" />
-      </div>
-      
-      
-    </div> -->
-
     <div id="orders-container"></div>
-
-    <!-- <div class="pop-up-container">
-          <div class="pop-up"></div>
-    </div> -->
-
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
       import {
@@ -235,41 +202,17 @@
 
       // For Firebase JS SDK v7.20.0 and later, measurementId is optional
       const firebaseConfig = {
-        apiKey: "AIzaSyD2FaIhRnaezk3s_P614kzFcpwMoNFymwo",
-        authDomain: "delivered-fe351.firebaseapp.com",
-        projectId: "delivered-fe351",
-        storageBucket: "delivered-fe351.appspot.com",
-        messagingSenderId: "785251078704",
-        appId: "1:785251078704:web:07f2aa71e961dc024413f5",
-        measurementId: "G-HTXM26C2MY",
+        apiKey: "AIzaSyBIwOxG_ef7A2Xip8AsWUZ8IoZV8VBpLvM",
+        authDomain: "lunchproapp.firebaseapp.com",
+        projectId: "lunchproapp",
+        storageBucket: "lunchproapp.appspot.com",
+        messagingSenderId: "152392983898",
+        appId: "1:152392983898:web:d2226b907876e786ffbf63",
+        measurementId: "G-SH04LLPWGP",
       };
-
       const app = initializeApp(firebaseConfig);
 
       const db = getFirestore(app);
-
-      async function addOrder() {
-        const delivered = document.getElementById("delivered").value;
-        const company = document.getElementById("company").value;
-        const date = document.getElementById("date").value;
-        const orderNumber = document.getElementById("orderNumber").value;
-
-        try {
-          await addDoc(collection(db, "orders"), {
-            delivered: delivered,
-            companyName: company,
-            date: date,
-            gerome: "Gérôme Détails ici",
-            orderDetails: "Détails de la commande",
-            orderNumber: orderNumber,
-            amountToPay: "Espèce à la livraison",
-            price: 120,
-          });
-          alert("Commande ajoutée avec succès");
-        } catch (error) {
-          console.error("Error adding order: ", error);
-        }
-      }
 
       function formatTimestamp(timestamp) {
         const date = new Date(timestamp.seconds * 1000);
@@ -280,25 +223,31 @@
         const ordersContainer = document.getElementById("orders-container");
         ordersContainer.innerHTML = "";
 
-        async function updateStatue(id, statue) {
+        async function updatestatus(id, status) {
           const orderDocRef = doc(db, "orders", id);
           const popupContainer = document.querySelector(".pop-up-container");
 
-          if (statue == 4) {
+          if (status == 4) {
             return;
           } else {
             try {
               await updateDoc(orderDocRef, {
                 delivered: true,
-                statue: statue + 1,
+                status:
+                  status == "pending"
+                    ? "on order"
+                    : status == "on order"
+                    ? "finish"
+                    : "finish",
+
                 color:
-                  statue == 0
+                  status == "pending"
                     ? "#eaff03"
-                    : statue == 1
+                    : status == "on order"
                     ? "#3bd000"
-                    : statue == 2
+                    : status == "finish"
                     ? "#008bcb"
-                    : "#ff5106",
+                    : "#008bcb",
               });
               // Update successful, now close the popup
               if (popupContainer) {
@@ -321,39 +270,39 @@
 
           // Add order details inside the popup
           popup.innerHTML = `
-    <div class='pop-up-body'>
-      <div id='id-part' class="part">
-        <p class='data'>#${id}</p> 
-        <p class='data'>${formatTimestamp(order.date)}</p> 
-      </div>
-      <div class='part'>
-        <p class="title">Company:</p>
-        <p class="data">${order.companyName}</p>
-      </div> 
-      <div class='part'>
-        <p class="title">Employee:</p>
-        <p class="data">${order.gerome}</p>
-      </div> 
-      <div class='part'>
-        <p class="title">Amount to Pay:</p>
-        <p class="data">${order.amountToPay}</p>
-      </div> 
-      <hr>
-      <div id='order-part' class='part'>
-        <p class="title">1</p>
-        <p class="data">${order.orderDetails}</p> 
-      </div> 
-      <hr> 
-      <div class='part'>
-        <p class="title">Price:</p>
-        <p class="data">${order.price}€</p>
-      </div>
-    </div>
-    <div class='pop-up-footer'>
-      <button id="btn-cancel" class="btn-cancel">Cancel Order</button>
-      <button id="btn-delivered" class="btn-delivered">Mark as Delivered</button>
-    </div>
-  `;
+        <div class='pop-up-body'>
+          <div id='id-part' class="part">
+            <p class='data'>#${id}</p>
+            <p class='data'>${formatTimestamp(order.createdAt)}</p>
+          </div>
+          <div class='part'>
+            <p class="title">Company:</p>
+            <p class="data">${order.companyName}</p>
+          </div>
+          <div class='part'>
+            <p class="title">Employee:</p>
+            <p class="data">${order.gerome}</p>
+          </div>
+          <div class='part'>
+            <p class="title">Amount to Pay:</p>
+            <p class="data">${order.amountToPay}</p>
+          </div>
+          <hr>
+          <div id='order-part' class='part'>
+            <p class="title">1</p>
+            <p class="data">${order.orderDetails}</p>
+          </div>
+          <hr>
+          <div class='part'>
+            <p class="title">Total:</p>
+            <p class="data">${order.total + " " + order.currency} </p>
+          </div>
+        </div>
+        <div class='pop-up-footer'>
+          <button id="btn-cancel" class="btn-cancel">Cancel Order</button>
+          <button id="btn-delivered" class="btn-delivered">Mark as Delivered</button>
+        </div>
+      `;
 
           // Append the popup to the container
           popupContainer.appendChild(popup);
@@ -374,7 +323,7 @@
           // Add event listener to the "Mark as Delivered" button
           const btnDelivered = document.getElementById("btn-delivered");
           btnDelivered.addEventListener("click", function () {
-            updateStatue(id, order.statue || 0);
+            updatestatus(id, order.status || "pending");
           });
           const cancel = document.getElementById("btn-cancel");
           cancel.addEventListener("click", function () {
@@ -387,30 +336,31 @@
 
           const card = document.createElement("div");
           card.classList.add("card");
-          card.style.backgroundColor = (order.statue && order.color) || "#fff";
+          card.style.backgroundColor = (order.status && order.color) || "#fff";
           card.onclick = () => showPopUp(order, doc.id);
 
           card.innerHTML = `
-      <div class="date-id-container">
-        <strong>${doc.id}</strong> 
-        <strong>${formatTimestamp(order.date)}</strong> 
-      </div>
-      <div class="divider"></div> 
-      <p><strong>${order.companyName}</strong></p> 
-      <p>${order.gerome}</p> 
-      <div class="divider"></div> 
-      <p>${order.orderDetails}</p> 
-      <div class="divider"></div>
-      <p><strong>Amount to Pay:</strong></p>
-      <p>${order.amountToPay}</p> 
-      <p>${order.price}€</p> 
-    `;
+          <div class="date-id-container">
+            <strong>${doc.id}</strong>
+            <strong>${formatTimestamp(order.createdAt)}</strong>
+          </div>
+          <div class="divider"></div>
+          <p><strong>${order.companyName}</strong></p>
+          <p>${order.gerome}</p>
+          <div class="divider"></div>
+          <p>${order.orderDetails}</p>
+          <div class="divider"></div>
+          <p><strong>Amount to Pay:</strong></p>
+          <p>${order.amountToPay}</p>
+          <p>${order.total + " " + order.currency}</p>
+        `;
 
           // Create a button for updating the status
           const button = document.createElement("button");
           button.classList.add("btn");
-          button.textContent = order.statue ? order.statue : "0";
-          button.onclick = () => updateStatue(doc.id, order.statue || 0); // Ensure this function is only called on click
+          button.textContent = order.status ? order.status : "pending";
+          button.onclick = () =>
+            updatestatus(doc.id, order.status || "pending"); // Ensure this function is only called on click
 
           card.appendChild(button);
           ordersContainer.appendChild(card);
@@ -422,11 +372,6 @@
 
         onSnapshot(ordersCollection, (snapshot) => {
           const orders = snapshot.docs;
-          const sortedOrders = orders.sort((a, b) => {
-            const dateA = a.data().date.seconds;
-            const dateB = b.data().date.seconds;
-            return dateB - dateA;
-          });
           displayOrders(orders);
         });
       }
